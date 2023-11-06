@@ -18,6 +18,7 @@ class FedController {
   async getAllMinistries() {
     try {
       const res = await ministryModel.find();
+      //   console.log("hello");
       return res;
     } catch (error) {
       console.log(error.message);
@@ -26,6 +27,7 @@ class FedController {
 
   async getMinistryByAcronym(acronym) {
     try {
+      acronym = acronym.toUpperCase();
       const res = await ministryModel.findOne({ acronym });
       return res;
     } catch (error) {
