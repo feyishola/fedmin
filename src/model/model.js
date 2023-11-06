@@ -1,10 +1,11 @@
 const { model, Schema } = require("mongoose");
 
-
 const ministrySchema = new Schema({
-    name: { type: String },
-    acronym: { type: String },
-    logo: { type: String }
+  name: { type: String },
+  acronym: { type: String },
+  logo: { type: String },
 });
 
-module.exports = model("ministry", ministrySchema)
+const minstryModel = model("ministry", ministrySchema);
+
+module.exports = minstryModel;

@@ -1,4 +1,5 @@
 require("./connection/mongodb.con")();
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
@@ -7,9 +8,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("api/vi/")
+app.use("api/v1/");
 
-
-app.listen(3000,()=>{
-    console.log("app listening on port 3000");
-})
+app.listen(3000, () => {
+  console.log("app listening on port 3000");
+});
