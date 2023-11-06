@@ -11,6 +11,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("api/v1/ministries", ministryRoutes);
 
-app.listen(Port, () => {
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
   console.log("app listening on port 3000");
 });
