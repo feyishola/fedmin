@@ -6,57 +6,83 @@ let api = new Router();
 module.exports = () => {
   api.post("/", async (req, res) => {
     try {
-      let { name, acronym, logo } = req.body;
-      let ministry = await ministryController.createMinistry(
-        name,
-        acronym,
-        logo
-      );
-      res.status(200).json({ ok: true, payload: ministry });
+      let body = req.body;
+      let ministry = await ministryController.createMinistry(body);
+      let { ok, data, message } = ministry;
+      if (ok) {
+        res.status(200).json({ ok, data });
+      } else {
+        res.status(400).json({ ok, message });
+      }
     } catch (err) {
-      res.status(500).json({ ok: false, error: err.message });
+      res.status(500).json({ ok: false, message: err.message });
     }
   });
 
   api.get("/", async (req, res) => {
     try {
       let ministries = await ministryController.getAllMinistries();
-      res.status(200).json({ ok: true, payload: ministries });
+      let { ok, data, message } = ministries;
+      if (ok) {
+        res.status(200).json({ ok, data });
+      } else {
+        res.status(400).json({ ok, message });
+      }
     } catch (err) {
-      res.status(500).json({ ok: false, error: err.message });
+      res.status(500).json({ ok: false, message: err.message });
     }
   });
-
-  // api.get("/:name", async (req, res) => {
-  //   try {
-  //     let name = req.params.name;
-  //     let ministry = await ministryController.getMinistryByName(name);
-  //     res.status(200).json({ ok: true, payload: ministry });
-  //   } catch (err) {
-  //     res.status(500).json({ ok: false, error: err.message });
-  //   }
-  // });
 
   api.get("/:searchparams", async (req, res) => {
     try {
       let searchparams = req.params.searchparams;
       let ministry;
 
-      //   if (searchparams.includes(" ")) {
-      //     ministry = await ministryController.getMinistryByName(searchparams);
-      //   } else {
-      //     ministry = await ministryController.getMinistryByAcronym(searchparams);
-      //   }
-
       ministry = await ministryController.getMinistryByAcronym(searchparams);
+
+      let { ok, data, message } = ministry;
 
       if (ministry == null) {
         throw new Error("No Match Found");
       }
-      res.status(200).json({ ok: true, payload: ministry });
+
+      if (ok) {
+        res.status(200).json({ ok, data });
+      } else {
+        res.status(400).json({ ok, message });
+      }
     } catch (err) {
-      res.status(500).json({ ok: false, error: err.message });
+      res.status(500).json({ ok: false, message: err.message });
     }
   });
+
+  //api.get("/:id", async (req, res) => {
+  //   try {
+  //     let id = req.params.id;
+  //     let ministry;
+
+  //   if (searchparams.includes(" ")) {
+  //     ministry = await ministryController.getMinistryByName(searchparams);
+  //   } else {
+  //     ministry = await ministryController.getMinistryByAcronym(searchparams);
+  //   }
+
+  //     ministry = await ministryController.getMinistryById(id);
+
+  //     let { ok, data, message } = ministry;
+
+  //     if (ministry == null) {
+  //       throw new Error("No Match Found");
+  //     }
+
+  //     if (ok) {
+  //       res.status(200).json({ ok, data });
+  //     } else {
+  //       res.status(400).json({ ok, message });
+  //     }
+  //   } catch (err) {
+  //     res.status(500).json({ ok: false, message: err.message });
+  //   }
+  // });
   return api;
 };
