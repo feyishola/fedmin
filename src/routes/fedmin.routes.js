@@ -1,5 +1,6 @@
 const ministryController = require("../controller/fedmin.controller");
 const { Router } = require("express");
+const htmlPage = require("../utils/page");
 
 let api = new Router();
 
@@ -17,6 +18,18 @@ module.exports = () => {
     } catch (err) {
       res.status(500).json({ ok: false, message: err.message });
     }
+  });
+
+  api.post("/page", (req, res) => {
+    const { userName, userType, token, ministryName, messageType } = req.body;
+    const htmlContent = htmlPage(
+      userName,
+      userType,
+      token,
+      ministryName,
+      messageType
+    );
+    res.status(200).send(htmlContent);
   });
 
   api.get("/", async (req, res) => {
