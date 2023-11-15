@@ -21,14 +21,16 @@ module.exports = () => {
   });
 
   api.post("/page", (req, res) => {
-    const { userName, userType, token, ministryName, messageType } = req.body;
-    const htmlContent = htmlPage(
-      userName,
-      userType,
-      token,
-      ministryName,
-      messageType
-    );
+    // const { userName, userType, token, ministryName, messageType } = req.body;
+    // const htmlContent = htmlPage(
+    //   userName,
+    //   userType,
+    //   token,
+    //   ministryName,
+    //   messageType
+    // );
+    const { name } = req.body;
+    const htmlContent = htmlPage(name);
     res.status(200).send(htmlContent);
   });
 
