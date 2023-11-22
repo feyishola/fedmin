@@ -1,6 +1,7 @@
 const ministryController = require("../controller/fedmin.controller");
 const { Router } = require("express");
 const htmlPage = require("../utils/page");
+const templatePage = require("../utils/templates/user/onetimepass");
 
 let api = new Router();
 
@@ -21,16 +22,26 @@ module.exports = () => {
   });
 
   api.post("/page", (req, res) => {
-    // const { userName, userType, token, ministryName, messageType } = req.body;
-    // const htmlContent = htmlPage(
-    //   userName,
-    //   userType,
-    //   token,
-    //   ministryName,
-    //   messageType
-    // );
+    const {
+      projectName,
+      startDate,
+      description,
+      ministryName,
+      projectGoals,
+      kpi,
+      endDate,
+    } = req.body;
+    const htmlContent = templatePage(
+      projectName,
+      startDate,
+      ministryName,
+      description,
+      projectGoals,
+      kpi,
+      endDate
+    );
     const { name } = req.body;
-    const htmlContent = htmlPage(name);
+    // const htmlContent = htmlPage(name);
     res.status(200).send(htmlContent);
   });
 
